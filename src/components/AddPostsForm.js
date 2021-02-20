@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { addNewPost } from "../services/blogs";
 import Notification from "./Notification";
 
-const AddPostsForm = ({ blogs, setBlogs }) => {
+const AddPostsForm = ({ blogs, setBlogs, hideForm }) => {
   const initialPost = { title: "", author: "", url: "" };
   const [post, setPost] = useState(initialPost);
   const [error, setError] = useState(null);
@@ -12,6 +12,8 @@ const AddPostsForm = ({ blogs, setBlogs }) => {
     try {
       const newPost = await addNewPost(post);
       setBlogs([...blogs, newPost]);
+      setPost(initialPost);
+      hideForm();
     } catch (err) {
       setError(err.response.data.error);
       setTimeout(() => setError(null), 2000);

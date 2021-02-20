@@ -18,4 +18,14 @@ const addNewPost = (newPost) => {
   const request = axios.post(baseUrl, newPost, config);
   return request.then((response) => response.data);
 };
-export { getAll, addNewPost };
+
+const updatePost = (id, post) => {
+  const request = axios.put(`${baseUrl}/${id}/`, post);
+  return request.then((response) => response.data);
+};
+
+const deletePost = (id) => {
+  const request = axios.delete(`${baseUrl}/${id}/`);
+  return request.then((response) => response.data);
+};
+export { getAll, addNewPost, updatePost, deletePost };
