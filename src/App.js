@@ -34,7 +34,7 @@ const App = () => {
       {loggedinUser ? (
         <>
           <h2>blogs</h2>
-          <h3>You're logged in as {loggedinUser.user.username}</h3>
+          <h3>You&apos;re logged in as {loggedinUser.user.username}</h3>
           <button onClick={logout}>logout</button>
           <Togglable
             ref={formRef}
