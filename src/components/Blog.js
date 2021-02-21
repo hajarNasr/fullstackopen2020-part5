@@ -24,7 +24,7 @@ const Blog = ({ blog, onDeleteBlog }) => {
   const deleteBlogPost = async () => {
     if (window.confirm("You Sure you want to delete this post?")) {
       try {
-        await deletePost(blog.id);
+        await deletePost(blog.id, blog.user.id);
         onDeleteBlog(blog.id);
       } catch (err) {
         console.log(err.response);

@@ -24,8 +24,11 @@ const updatePost = (id, post) => {
   return request.then((response) => response.data);
 };
 
-const deletePost = (id) => {
-  const request = axios.delete(`${baseUrl}/${id}/`);
+const deletePost = (id, userId) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
+  const request = axios.delete(`${baseUrl}/${userId}/${id}/`, config);
   return request.then((response) => response.data);
 };
 export { getAll, addNewPost, updatePost, deletePost };
