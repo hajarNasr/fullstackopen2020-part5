@@ -22,18 +22,20 @@ const LoginForm = ({ setUser }) => {
   return (
     <>
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} id="login-form">
         <input
           value={username}
           placeholder="username"
+          id="username"
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           value={password}
           placeholder="password"
+          id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button>Login</button>
+        <button id="submit-btn">Login</button>
       </form>
       {error && (
         <Notification msg={{ type: "error", content: "Wrong Password" }} />

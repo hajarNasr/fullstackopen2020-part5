@@ -21,23 +21,26 @@ const AddPostsForm = ({ blogs, setBlogs, hideForm }) => {
   };
   return (
     <>
-      <form onSubmit={handleAddingNewPosts}>
+      <form onSubmit={handleAddingNewPosts} className="form">
         <input
           placeholder="title"
+          className="title"
           value={post.title}
           onChange={(e) => setPost({ ...post, title: e.target.value })}
         />
         <input
           placeholder="author"
+          className="author"
           value={post.author}
           onChange={(e) => setPost({ ...post, author: e.target.value })}
         />
         <input
           placeholder="url"
+          className="url"
           value={post.url}
           onChange={(e) => setPost({ ...post, url: e.target.value })}
         />
-        <button>Create</button>
+        <button id="add-blog-submit">Create</button>
       </form>
       {error && <Notification msg={{ type: "error", content: error }} />}
     </>

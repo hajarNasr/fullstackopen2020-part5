@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Togglable from "./Togglable";
 import { updatePost, deletePost } from "../services/blogs";
+import Notification from "./Notification";
 
 const Blog = ({ blog, onDeleteBlog }) => {
   const [likes, setLikes] = useState(blog.likes);
+  const [message, setMessage] = useState(null);
 
   const blogStyle = {
     paddingTop: 10,
@@ -25,25 +27,39 @@ const Blog = ({ blog, onDeleteBlog }) => {
     if (window.confirm("You Sure you want to delete this post?")) {
       try {
         await deletePost(blog.id, blog.user.id);
-        onDeleteBlog(blog.id);
+        setMessage({
+          type: "success",
+          content: "successfully deleted",
+        });
+        setTimeout(() => {
+          setMessage(null);
+          onDeleteBlog(blog.id);
+        }, 2000);
       } catch (err) {
-        console.log(err.response);
+        if (err.response && err.response.status === 401) {
+          setMessage({
+            type: "error",
+            content: "You can only delete your posts",
+          });
+          setTimeout(() => setMessage(null), 2000);
+        }
       }
     }
   };
   return (
-    <div style={blogStyle}>
-      <div>
-        <p>Title: {blog.title}</p>
-        <Togglable cancelBtnText="hide" showBtnText="view">
-          <p>Author: {blog.author}</p>
-          <p>
-            URL: {blog.url} {likes}
-            <button onClick={increaseLikes}>Like</button>
-          </p>
-          <button onClick={deleteBlogPost}>Remove</button>
-        </Togglable>
-      </div>
+    <div style={blogStyle} className="blog-post">
+      <p>Title: {blog.title}</p>
+      <p>Author: {blog.author}</p>
+      <Togglable cancelBtnText="hide" showBtnText="view">
+        <p>
+          URL: {blog.url} <span className="likes">{likes}</span>
+          <button onClick={increaseLikes} id="like-btn">
+            Like
+          </button>
+        </p>
+        <button onClick={deleteBlogPost}>Remove</button>
+      </Togglable>
+      {message && <Notification msg={message} />}
     </div>
   );
 };
